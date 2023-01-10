@@ -1,4 +1,6 @@
-# SKLearn学习笔记
+# Scikit-Learn学习笔记
+
+
 
 ### &sect;0.环境配置
 
@@ -11,6 +13,10 @@
 2、Jupyter使用方法简介
 
 参考链接：[简单了解JupyterLab的使用方法 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/383005827)
+
+3、修改JupyterLab默认路径
+
+参考链接：[修改Jupyter Lab、Jupyter Notebook的工作目录_奶茶可可的博客-CSDN博客_jupyter 修改目录](https://blog.csdn.net/xing09268/article/details/123919230?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1-123919230-blog-126015415.pc_relevant_3mothn_strategy_recovery&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1-123919230-blog-126015415.pc_relevant_3mothn_strategy_recovery&utm_relevant_index=2)
 
 **二、graphviz**
 
