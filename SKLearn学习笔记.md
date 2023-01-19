@@ -6,6 +6,98 @@
 
 章节2：[随机森林](#2)
 
+章节3：[预处理和特征工程](#3)
+
+
+
+<p id="3"></p>
+
+
+
+### &sect;3.预处理和特征工程
+
+数据挖掘五大流程：获取数据 —》数据预处理 —》特征工程 —》建模 —》上线验证
+
+**一、数据预处理**
+
+1、数据无量纲化
+
+​	将不同规格的数据转换到同一规格，或不同分布的数据转换到某个特定分布的需求，这种需求统称为将数据“无量纲化”。
+
+​	（1）preprocessing.MinMaxScaler
+
+​	 当数据(x)按照最小值中心化后，再按极差（最大值 - 最小值）缩放，数据移动了最小值个单位，并且会被收敛到
+
+[0,1]之间，而这个过程，就叫做数据归一化。
+
+​	`data = [[-1, 2], [-0.5, 6], [0, 10], [1, 18]]`
+
+​	`scaler = MinMaxScaler() #实例化`
+
+​	`result_ = scaler.fit_transform(data) #训练和导出结果一步达成`
+
+​	`scaler.inverse_transform(result) #将归一化后的结果逆转`
+
+​	（2）preprocessing.StandardScaler
+
+​	 当数据(x)按均值(μ)中心化后，再按标准差(σ)缩放，数据就会服从为均值为0，方差为1的正态分布（即标准正态分
+
+布），而这个过程，就叫做数据标准化
+
+​	`scaler = StandardScaler() #实例化`
+
+​	`scaler.fit_transform(data) #使用fit_transform(data)一步达成结果`
+
+​	`scaler.inverse_transform(x_std) #使用inverse_transform逆转标准化`
+
+大多数机器学习算法中，会选择**StandardScaler**来进行特征缩放，因为MinMaxScaler对异常值非常敏感。
+
+**二、缺失值：impute.SimpleImputer**
+
+`#填补年龄
+Age = data.loc[:,"Age"].values.reshape(-1,1) #sklearn当中特征矩阵必须是二维`	
+
+`from sklearn.impute import SimpleImputer
+imp_mean = SimpleImputer() #实例化，默认均值填补
+imp_median = SimpleImputer(strategy="median") #用中位数填补
+imp_0 = SimpleImputer(strategy="constant",fill_value=0) #用0填补`
+
+`imp_mean = imp_mean.fit_transform(Age) #fit_transform一步完成调取结果
+imp_median = imp_median.fit_transform(Age)
+imp_0 = imp_0.fit_transform(Age)`
+
+输入“mean”使用均值填补(默认)（仅对数值型特征可用）
+
+输入“median"用中值填补（仅对数值型特征可用）
+
+输入"most_frequent”用众数填补（对数值型和字符型特征都可用）
+
+输入“constant"表示请参考参数“fifill_value"中的值（对数值型和字符型特征都可用）
+
+**三、编码与哑变量**
+
+为了让数据适应算法和库，我们必须将数据进行编码，即是说，将文字型数据转换为数值型。
+
+1、**preprocessing.LabelEncoder**：标签专用，能够将分类转换为分类数值
+
+`from sklearn.preprocessing import LabelEncoder`
+
+`data.iloc[:,-1] = LabelEncoder().fit_transform(data.iloc[:,-1])`
+
+2、**preprocessing.OrdinalEncoder**：特征专用，能够将分类特征转换为分类数值
+
+`from sklearn.preprocessing import OrdinalEncoder`
+
+`data_.iloc[:,1:-1] = OrdinalEncoder().fit_transform(data_.iloc[:,1:-1])`
+
+3、**preprocessing.OneHotEncoder**：独热编码，创建哑变量
+
+​	算法会把舱门，学历这样的分类特征，都误会成是体重这样的分类特征。这是说，我们把分类转换成数字的时候，忽略了数字中自带的数学性质，所以给算法传达了一些不准确的信息，而这会影响我们的建模。
+
+
+
+
+
 
 
 <p id="2"></p>
@@ -48,6 +140,8 @@
 
 1、基本思想：
 
+​	![hadoop](https://github.com/Vincy-w/SKLearn/raw/master/pic/泛化误差.png)
+
 ​	①模型太复杂或者太简单，都会让泛化误差高，我们追求的是位于中间的平衡点
 
 ​	②模型太复杂就会过拟合，模型太简单就会欠拟合
@@ -55,6 +149,17 @@
 ​	③对树模型和树的集成模型来说，树的深度越深，枝叶越多，模型越复杂
 
 ​	④树模型和树的集成模型的目标，都是减少模型复杂度，把模型往图像的左边移动
+
+2、参数重要性
+
+|       参数        |               对模型在未知数据上的评估性能影响               |  影响程度  |
+| :---------------: | :----------------------------------------------------------: | :--------: |
+|   n_estimators    |      提升至平稳，n_estimators↑，不影响单个模型的复杂度       |    ⭐⭐⭐⭐    |
+|     max_depth     | 有增有减，默认最大深度，即最高复杂度，向复杂度降低的方向调参。max_depth↓，模型更简单，且向图像的左边移动 |    ⭐⭐⭐     |
+| min_samples_leaf  | 有增有减，默认最小限制1，即最高复杂度，向复杂度降低的方向调参。min_samples_leaf↑，模型更简单，且向图像的左边移动 |     ⭐⭐     |
+| min_samples_split | 有增有减，默认最小限制2，即最高复杂度，向复杂度降低的方向调参。min_samples_split↑，模型更简单，且向图像的左边移动 |     ⭐⭐     |
+|   max_features    | 有增有减，默认auto，是特征总数的开平方，位于中间复杂度，既可以向复杂度升高的方向，也可以向复杂度降低的方向调参。max_features↓，模型更简单，图像左移。max_features↑，模型更复杂，图像右移。max_features是唯一的，既能够让模型更简单，也能够让模型更复杂的参数，所以在调整这个参数的时候，需要考虑我们调参的方向 |     ⭐      |
+|     criterion     |                    有增有减，一般使用gini                    | 看具体情况 |
 
 
 
