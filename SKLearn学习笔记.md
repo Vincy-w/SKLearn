@@ -94,9 +94,31 @@ imp_0 = imp_0.fit_transform(Age)`
 
 ​	算法会把舱门，学历这样的分类特征，都误会成是体重这样的分类特征。这是说，我们把分类转换成数字的时候，忽略了数字中自带的数学性质，所以给算法传达了一些不准确的信息，而这会影响我们的建模。
 
+![hadoop](https://github.com/Vincy-w/SKLearn/raw/master/pic/独热编码.png)
 
+`from sklearn.preprocessing import OneHotEncoder
+X = data.iloc[:,1:-1]`
 
+`OneHotEncoder(categories='auto').fit_transform(X).toarray()`
 
+`#依然可以还原
+pd.DataFrame(enc.inverse_transform(result))`
+
+**四、二值化与分段**
+
+1、**sklearn.preprocessing.Binarizer**
+
+​	根据阈值将数据二值化（将特征值设置为0或1），用于处理连续型变量
+
+2、**preprocessing.KBinsDiscretizer**
+
+​	这是将连续型变量划分为分类变量的类，能够将连续型变量排序后按顺序分箱后编码。总共包含三个重要参数：
+
+|     参数     |                          含义&输入                           |
+| :----------: | :----------------------------------------------------------: |
+|  **n_bins**  |                  每个特征中分箱个数，默认5                   |
+|  **encode**  | 编码方式，默认“onehot”<br />“onehot”:做哑变量，之后返回一个稀疏矩阵，每一列是一个特征中的一个类别，含有该类别的样本表示为1，不含的表示为0<br />"ordinal":每个特征的每个箱都被编码为一个整数，返回每一列是一个特征，每个特征下含有不同整数编码的箱的矩阵<br />"onehot-dense":做哑变量，之后返回一个密集数组。 |
+| **strategy** | 用来定义箱宽的方式，默认"quantile" <br /> "uniform"：表示等宽分箱，即每个特征中的每个箱的最大值之间的差为max-min/n_bins<br />"quantile"：表示等位分箱，即每个特征中的每个箱内的样本数量都相同<br />"kmeans"：表示按聚类分箱，每个箱中的值到最近的一维k均值聚类的簇心得距离都相同 |
 
 
 
