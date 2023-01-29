@@ -18,6 +18,24 @@
 
 章节8：[SVM下](#8)
 
+章节9：[线性回归](#9)
+
+
+
+<p id="9"></p>
+
+
+
+### &sect;9.线性回归
+
+**一、多元线性回归**
+
+
+
+​	线性回归的任务，就是构造一个预测函数来映射输入的特征矩阵**X**和标签值**y**的线性关系，这个预测函数的本质就是我们需要构建的模型，而构造预测函数的核心就是找出模型的参数向量**ω**。
+
+导入加利福尼亚房价时报错：HTTP 403，解决方法：[解决fetch_california_housing()数据集下载失败的问题_青峰不长存的博客-CSDN博客_figshare怎么下载数据](https://blog.csdn.net/qq_44644355/article/details/107054585?spm=1001.2101.3001.6650.9&utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-9-107054585-blog-121477715.pc_relevant_aa&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-9-107054585-blog-121477715.pc_relevant_aa&utm_relevant_index=12)
+
 
 
 <p id="8"></p>
