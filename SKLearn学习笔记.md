@@ -20,6 +20,20 @@
 
 章节9：[线性回归](#9)
 
+章节10：[朴素贝叶斯](#10)
+
+
+
+<p id="10"></p>
+
+
+
+### &sect;10.朴素贝叶斯
+
+**一、贝叶斯原理**
+
+**二、不同分布下的贝叶斯**
+
 
 
 <p id="9"></p>
@@ -30,9 +44,21 @@
 
 **一、多元线性回归**
 
+![hadoop](https://github.com/Vincy-w/SKLearn/raw/master/pic/多元线性回归.png)
 
+​	其中，**y**是包含了m个全部样本的回归结果的列向量。**ω**可以被看作是一个结构为(1，n)的列矩阵，**X**是一个结构为(m,n)的特征矩阵。
 
-​	线性回归的任务，就是构造一个预测函数来映射输入的特征矩阵**X**和标签值**y**的线性关系，这个预测函数的本质就是我们需要构建的模型，而构造预测函数的核心就是找出模型的参数向量**ω**。
+​	线性回归的任务，就是构造一个预测函数来映射输入的特征矩阵**X**和标签值**y**的线性关系，这个预测函数的本质就是我们需要构建的模型，而构造预测函数的核心就是找出模型的参数向量**ω**。损失函数衡量了我们构造的模型的预测结果和真实标签的差异，因此我们固然希望我们的预测结果和真实值差异越小越好。所以我们的求解目标就可以转化成：
+
+![hadoop](https://github.com/Vincy-w/SKLearn/raw/master/pic/线性损失函数.png)
+
+​	我们往往称这个式子为RSS（残差平方和）,现在问题转换成了求解让RSS最小化的参数向量 ，这种通过最小化真实值和预测值之间的RSS来求解参数的方法叫做**最小二乘法**。
+
+**二、评估指标**
+
+MSE(均方误差)、MAE(绝对均值误差)、R^2、EVS(可解释性方差分数)
+
+**X、代码错误**
 
 导入加利福尼亚房价时报错：HTTP 403，解决方法：[解决fetch_california_housing()数据集下载失败的问题_青峰不长存的博客-CSDN博客_figshare怎么下载数据](https://blog.csdn.net/qq_44644355/article/details/107054585?spm=1001.2101.3001.6650.9&utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-9-107054585-blog-121477715.pc_relevant_aa&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-9-107054585-blog-121477715.pc_relevant_aa&utm_relevant_index=12)
 
